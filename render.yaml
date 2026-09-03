@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: laopo-sticker-mcp
+    runtime: docker
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      - key: ENABLE_ADD_TOOL
+        value: "false"
+      - key: ENABLE_COLLECT_TOOL
+        value: "false"
+      - key: MCP_STATELESS_HTTP
+        value: "true"

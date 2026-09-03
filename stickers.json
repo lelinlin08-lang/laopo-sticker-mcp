@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "stickers": [
+    {
+      "id": "love_cat_001",
+      "name": "永远很爱你猫猫",
+      "image_url": "${PUBLIC_BASE_URL}/media/love_cat_001.png",
+      "tags": ["爱", "爱你", "撒娇", "情侣", "安慰", "猫猫"],
+      "description": "粉色背景上的白色猫猫举着爱心，认真回答永远都很爱你。",
+      "emotion": ["甜", "安慰", "认真", "亲昵"],
+      "usage": "对方怀疑感情、撒娇询问爱不爱时使用。"
+    },
+    {
+      "id": "hmpf_cat_001",
+      "name": "哼哼炸毛猫",
+      "image_url": "${PUBLIC_BASE_URL}/media/hmpf_cat_001.png",
+      "tags": ["哼", "斗嘴", "生气", "吃醋", "猫猫"],
+      "description": "橘色猫猫抱着手臂扭过头，嘴硬但仍然很可爱。",
+      "emotion": ["傲娇", "吃醋", "轻微生气"],
+      "usage": "轻松斗嘴、假装生气、可爱地表达吃醋时使用。"
+    },
+    {
+      "id": "shock_cat_001",
+      "name": "猫猫瞳孔地震",
+      "image_url": "${PUBLIC_BASE_URL}/media/shock_cat_001.png",
+      "tags": ["震惊", "救命", "什么", "离谱", "猫猫"],
+      "description": "灰色猫猫睁圆眼睛，头顶冒出三个大大的感叹号。",
+      "emotion": ["震惊", "不可思议", "好笑"],
+      "usage": "听到离谱消息、突然反转或想夸张表达震惊时使用。"
+    }
+  ]
+}
+

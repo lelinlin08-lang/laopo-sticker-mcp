@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: ui-rounded, "SF Pro Rounded", "PingFang SC", system-ui, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: transparent; color: CanvasText; }
+      #app { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+      .sticker {
+        display: grid;
+        gap: 7px;
+        align-content: start;
+        padding: 10px;
+        border: 1px solid color-mix(in srgb, CanvasText 14%, transparent);
+        border-radius: 18px;
+        background: color-mix(in srgb, Canvas 94%, #ff7aa8 6%);
+      }
+      img {
+        display: block;
+        width: 100%;
+        max-height: 300px;
+        object-fit: contain;
+        border-radius: 13px;
+        background: color-mix(in srgb, Canvas 90%, #ffd9e5 10%);
+      }
+      h2 { margin: 0; font-size: 14px; line-height: 1.35; }
+      p { margin: 0; opacity: .72; font-size: 12px; line-height: 1.45; }
+      .empty { padding: 16px; opacity: .65; font-size: 13px; }
+      .image-error { display: none; padding: 18px; text-align: center; font-size: 12px; opacity: .65; }
+    </style>
+  </head>
+  <body>
+    <main id="app" aria-live="polite"><div class="empty">正在挑表情包…</div></main>
+    <script>
+      const app = document.getElementById("app");
+
+      function asStickerArray(output) {
+        if (!output || typeof output !== "object") return [];
+        if (Array.isArray(output.stickers)) return output.stickers;
+        if (output.sticker && typeof output.sticker === "object") return [output.sticker];
+        return [];
+      }
+
+      function render(output) {
+        const stickers = asStickerArray(output).slice(0, 3);
+        app.replaceChildren();
+        if (!stickers.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "这次没有找到合适的表情包。";
+          app.append(empty);
+          notifyHeight();
+          return;
+        }
+
+        for (const sticker of stickers) {
+          const card = document.createElement("article");
+          card.className = "sticker";
+
+          const image = document.createElement("img");
+          image.src = String(sticker.image_url || "");
+          image.alt = String(sticker.name || "表情包");
+          image.loading = "eager";
+          image.referrerPolicy = "no-referrer";
+
+          const error = document.createElement("div");
+          error.className = "image-error";
+          error.textContent = "图片加载失败，请检查公网直链和 CSP 域名。";
+          image.addEventListener("error", () => {
+            image.style.display = "none";
+            error.style.display = "block";
+            notifyHeight();
+          });
+          image.addEventListener("load", notifyHeight);
+
+          const title = document.createElement("h2");
+          title.textContent = String(sticker.name || "表情包");
+          const description = document.createElement("p");
+          description.textContent = String(sticker.description || sticker.usage || "");
+
+          card.append(image, error, title, description);
+          app.append(card);
+        }
+        notifyHeight();
+      }
+
+      function notifyHeight() {
+        requestAnimationFrame(() => {
+          window.openai?.notifyIntrinsicHeight?.(document.documentElement.scrollHeight);
+        });
+      }
+
+      window.addEventListener("message", (event) => {
+        if (event.source !== window.parent) return;
+        const message = event.data;
+        if (!message || message.jsonrpc !== "2.0") return;
+        if (message.method !== "ui/notifications/tool-result") return;
+        render(message.params?.structuredContent || message.params?.structured_content || null);
+      }, { passive: true });
+
+      render(window.openai?.toolOutput || null);
+    </script>
+  </body>
+</html>
+
