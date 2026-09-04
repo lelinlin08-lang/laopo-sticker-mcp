@@ -27,6 +27,15 @@
       "description": "灰色猫猫睁圆眼睛，头顶冒出三个大大的感叹号。",
       "emotion": ["震惊", "不可思议", "好笑"],
       "usage": "听到离谱消息、突然反转或想夸张表达震惊时使用。"
+        },
+    {
+      "id": "this_is_us_cats_001",
+      "name": "这就是我们·你没得选",
+      "image_url": "${PUBLIC_BASE_URL}/media/this_is_us_cats_001.jpg",
+      "tags": ["我们", "情侣", "绑定", "没得选", "贴贴", "占有欲", "猫猫"],
+      "description": "两只猫猫紧紧挤在一起，配字“This is us (you have no choice)”。",
+      "emotion": ["亲密", "霸道", "黏人", "搞笑"],
+      "usage": "确认关系、宣布绑定、撒娇黏人或开玩笑表达你只能和我在一起时使用。"
     }
   ]
 }
